@@ -40,7 +40,7 @@ sortedEigenVectors = the complete set of sorted eigenvectors
  
 If you only assign one output
 (i.e. of the form sortedB = extract_spectral_reorder(B), only the spectrally reordered matrix
-- not the reordering vector or the other outputs - will be produced)
+not the reordering vector or the other outputs - will be produced)
  
 Created by:
 Claude J. Bajada - University of Manchester
