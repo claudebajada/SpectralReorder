@@ -114,7 +114,7 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
   % particularly problematic with the non-symmetric random walk normalised
   % laplacian
 
-  switch lower(method),
+  switch lower(method)
     case 'geig'
 
       % Method using generalised spectral decomposition of the
@@ -134,7 +134,7 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
       L = force_symmetric(L); %force exact symmetry
       [V,s] = eig(L);
       [sortedEigenValues,b] = sort(diag(real(s)),'ascend'); % Sort eigenvalues
-      v2 = real(t * V(:,b(2))); % Get Fiedler vector and renormalise
+      v2 = real(t \ V(:,b(2))); % Get Fiedler vector and renormalise
       [~,p] = sort(v2); % Get reordering operator.
       sortedB = B(p,p); % Apply reordering.
       v3D = t \ V(:,b(2:4)); % Extract first three eigenvectors and re-normalise to "stretch" the axis in the eigenspace
@@ -166,14 +166,14 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
     otherwise
       error('This method is not allowed: the input for method must be: "sym" , "rw" , "geig" or "unnorm"')
 
-    end
+  end
 
     clc
 
     disp( [ 'The second smallest eigenvalue == ', num2str(sortedEigenValues(2)) ] );
     disp( 'In order for the reordering to hold, the value must be greater than zero save for numerical error' );
 
-  end
+end
 
   %% internal function for forced symmetry
 function M = force_symmetric(M)
