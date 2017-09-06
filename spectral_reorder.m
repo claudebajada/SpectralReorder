@@ -123,7 +123,7 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
       v2 = real(V(:,b(2))); % Get Fiedler vector. Here renormalisation is not necessary
       [~,p] = sort(v2); % Get reordering operator.
       sortedB = B(p,p); % Apply reordering.
-      v3D = real(V(:,b(2:4))) ; % Extract first three eigenvectors
+      v3D = real(V(:,b(2:4))) ; % Extract first three eigenvectors (non-zero)
       sortedEigenVectors = real(V(:,b(1:length(b)))); % Extract the full set of eigenvectors
 
     case 'sym'
@@ -142,10 +142,10 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
 
     case 'rw'
       % Method using eigen decomposition of Random Walk Normalised Laplacian
-      t = sqrt(D);
+      % This method has not been rigorously tested yet
+      t = D;
       L = t\Q; % this laplacian is asymmetric
       [V,s] = eig(L);
-
       [sortedEigenValues,b] = sort(diag(real(s)),'ascend'); % Sort eigenvalues
       v2 = real(V(:,b(2))); % Get Fiedler vector. Here renormalisation is not necessary
       [~,p] = sort(v2); % Get reordering operator.
