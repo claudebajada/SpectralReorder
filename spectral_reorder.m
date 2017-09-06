@@ -157,8 +157,7 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
       % Method using generalised spectral decomposition of the unnormalised Laplacian
       [V,s] = eig(Q);
       [sortedEigenValues,b] = sort(diag(real(s)),'ascend'); % Sort eigenvalues
-      v2 = real(V(:,b(2))); % Get Fiedler vector. Here renormalisation
-      is not necessary
+      v2 = real(V(:,b(2))); % Get Fiedler vector. Here renormalisation is not necessary
       [~,p] = sort(v2); % Get reordering operator.
       sortedB = B(p,p); % Apply reordering.
       v3D = real(V(:,b(2:4))) ; % Extract first three eigenvectors
