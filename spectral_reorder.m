@@ -116,7 +116,6 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
 
   switch lower(method)
     case 'geig'
-
       % Method using generalised spectral decomposition of the
       % un-normalised Laplacian (see Shi and Malik, 2000)
       [V,s] = eig(Q,D);
@@ -129,6 +128,7 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
 
     case 'sym'
       % Method using eigen decomposition of Symmetric Normalised Laplacian
+      % Note results should be exactly the same as geig
       t = sqrt(D);
       L = (t \ Q) / t; % Compute the normalised Laplacian Note, use of "/" and "\" is faster and more accurate than multiplying by the inverse
       L = force_symmetric(L); %force exact symmetry
@@ -154,7 +154,7 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
       sortedEigenVectors = real(V(:,b(1:length(b)))); % Extract the full set of eigenvectors
 
     case 'unnorm'
-      % Method using generalised spectral decomposition of the unnormalised Laplacian
+      % Method using spectral decomposition of the unnormalised Laplacian
       [V,s] = eig(Q);
       [sortedEigenValues,b] = sort(diag(real(s)),'ascend'); % Sort eigenvalues
       v2 = real(V(:,b(2))); % Get Fiedler vector. Here renormalisation is not necessary
