@@ -120,6 +120,9 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
       % un-normalised Laplacian (see Shi and Malik, 2000)
       [V,s] = eig(Q,D);
       [sortedEigenValues,b] = sort(diag(real(s)),'ascend'); % Sorteigenvalues
+      if sum(isnan(sortedEigenValues)) > 0
+          error('NaNs present in solution')
+      end
       v2 = real(V(:,b(2))); % Get Fiedler vector. Here renormalisation is not necessary
       [~,p] = sort(v2); % Get reordering operator.
       sortedB = B(p,p); % Apply reordering.
@@ -134,6 +137,9 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
       L = force_symmetric(L); %force exact symmetry
       [V,s] = eig(L);
       [sortedEigenValues,b] = sort(diag(real(s)),'ascend'); % Sort eigenvalues
+      if sum(isnan(sortedEigenValues)) > 0
+          error('NaNs present in solution')
+      end
       v2 = real(t \ V(:,b(2))); % Get Fiedler vector and renormalise
       [~,p] = sort(v2); % Get reordering operator.
       sortedB = B(p,p); % Apply reordering.
@@ -147,6 +153,9 @@ function [sortedB, p, v2, v3D, sortedEigenValues , sortedEigenVectors] = spectra
       L = t\Q; % this laplacian is asymmetric
       [V,s] = eig(L);
       [sortedEigenValues,b] = sort(diag(real(s)),'ascend'); % Sort eigenvalues
+      if sum(isnan(sortedEigenValues)) > 0
+          error('NaNs present in solution')
+      end
       v2 = real(V(:,b(2))); % Get Fiedler vector. Here renormalisation is not necessary
       [~,p] = sort(v2); % Get reordering operator.
       sortedB = B(p,p); % Apply reordering.
